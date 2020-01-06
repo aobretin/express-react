@@ -1,16 +1,31 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
+import {
+    HeaderToolbarStyles,
+    NotesAndFilterStyles
+} from "./styles";
+import Buttons from "./components/Buttons";
+import FilterBar from "./components/FilterBar";
+
+import useNotes from "../../reduxHooks/useNotes";
+
 const Header: React.FC = () => {
+    const {notes} = useNotes();
+
     return (
         <AppBar position="static">
-            <Toolbar>
-                <Typography variant="h6" noWrap>
-                    Notes
-                </Typography>
-            </Toolbar>
+            <HeaderToolbarStyles>
+                <NotesAndFilterStyles>
+                    <Typography variant="h6" noWrap>
+                        Notes
+                    </Typography>
+                    {!!notes.length && <FilterBar />}
+                </NotesAndFilterStyles>
+                
+                <Buttons />
+            </HeaderToolbarStyles>
         </AppBar>
     );
 }

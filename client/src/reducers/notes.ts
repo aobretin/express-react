@@ -14,7 +14,11 @@ export const notes = (state: INote[] = initialState.notes, action: NotesAction):
         case MODIFY_NOTE:
             return state;
         case DELETE_NOTE:
-            return state;
+            const toDeleteNoteIndex = state.findIndex(note => note.id === action.id);
+            const clonedNotes = [...state];
+            clonedNotes.splice(toDeleteNoteIndex, 1);
+            
+            return [...clonedNotes];
         default:
             return state;
     }

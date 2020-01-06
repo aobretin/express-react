@@ -14,7 +14,7 @@ export default (): JSX.Element => {
                     <Notes />
                 </Route>
 
-                {/* <Route path="/:id" exact>
+                {/* <Route path="note/:id?/:edit?">
                     
                 </Route> */}
             </Route>

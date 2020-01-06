@@ -5,7 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 const Buttons: React.FC = () => {
     return (
         <React.Fragment>
-            <Fab color="secondary">
+            <Fab size="small">
                 <AddIcon />
             </Fab>
         </React.Fragment>

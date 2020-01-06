@@ -18,4 +18,5 @@ export interface IModifyNote {
 
 export interface IDeleteNote {
     type: typeof DELETE_NOTE;
+    id: string
 }
