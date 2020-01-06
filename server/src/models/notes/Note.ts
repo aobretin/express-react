@@ -1,17 +1,27 @@
 import {Property} from "@tsed/common";
 import {Model, ObjectID} from "@tsed/mongoose";
 
-@Model()
 export class Note {
-  @ObjectID("id")
-  _id: string;
+  @Property()
+  title?: string;
 
   @Property()
-  title: string;
+  description?: string;
 
   @Property()
-  description: string;
+  tags?: string[];
+}
+@Model()
+export class NoteModel extends Note {
+    @ObjectID("id")
+    _id: string;
 
-  @Property()
-  tags: string[];
+    @Property()
+    title: string;
+
+    @Property()
+    description: string;
+
+    @Property()
+    tags: string[];
 }

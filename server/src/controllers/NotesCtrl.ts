@@ -10,10 +10,10 @@ import {
     Delete
 } from "@tsed/common";
 import {NotesService} from "../services/notes/NotesService";
-import {Note} from "../models/notes/Note";
+import {Note, NoteModel} from "../models/notes/Note";
 
 @Controller("/notes")
-export class CalendarCtrl {
+export class NotesCtrl {
     constructor(private notesService: NotesService) {
 
     }
@@ -21,20 +21,20 @@ export class CalendarCtrl {
     @Get()
     @Get("/:id")
     @Status(200, {description: "Success", type: Note, collectionType: Array})
-    async getAllNotes(@PathParams("id") id: string): Promise<Note[] | Note> {
+    async getAllNotes(@PathParams("id") id?: string): Promise<Note[] | Note> {
         const query = id ? {_id: id} : null;
         return this.notesService.getAllNotes(query);
     }
 
     @Post()
     @Status(201, {description: "Created", type: Note})
-    async saveNote(@BodyParams() note: Note): Promise<Note> {
+    async saveNote(@BodyParams() note: NoteModel): Promise<Note> {
         return this.notesService.saveNote(note);
     }
 
     @Put("/:id")
     @Status(200, {description: "Success", type: Note})
-    async modifyNote(@PathParams("id") @Required() id: string, @BodyParams() note: Note): Promise<Note> {
+    async modifyNote(@PathParams("id") @Required() id: string, @BodyParams() note: Partial<Note>): Promise<Note> {
         return this.notesService.modifyNote(id, note);
     }
 
