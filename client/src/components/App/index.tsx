@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 
 import Routes from "../Routes";
+import Header from "../Header";
 import useNotes from "../../reduxHooks/useNotes";
 
 import {ENDPOINTS} from "../../constants";
@@ -24,6 +25,7 @@ const App: React.FC = () => {
     <div className="Notes">
       <Router>
         <CssBaseline />
+        <Header />
         <Routes />
       </Router>
     </div>
