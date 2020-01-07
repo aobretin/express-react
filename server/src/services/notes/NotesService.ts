@@ -14,6 +14,7 @@ export class NotesService {
     }
 
     async saveNote(note: NoteModel): Promise<NoteModel> {
+        console.log(note);
         $log.debug("Saving note", note);
 
         const newNote = new this.Note(note);

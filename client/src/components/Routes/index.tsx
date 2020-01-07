@@ -1,10 +1,11 @@
 import React from "react";
 import {
-  Switch,
-  Route
+    Switch,
+    Route
 } from "react-router-dom";
 
 import Notes from "../Notes";
+import NoteDetails from "../NoteDetails";
 
 export default (): JSX.Element => {
     return (
@@ -14,9 +15,9 @@ export default (): JSX.Element => {
                     <Notes />
                 </Route>
 
-                {/* <Route path="note/:id?/:edit?">
-                    
-                </Route> */}
+                <Route path="/note/:id?/:edit?">
+                    <NoteDetails />
+                </Route>
             </Route>
         </Switch>
     )

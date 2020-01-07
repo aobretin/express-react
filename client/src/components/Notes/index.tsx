@@ -4,11 +4,20 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 
 import Note from "./components/Note";
+import {NoResultsText} from "./styles";
+
+let shouldLoadList = true;
 
 const Notes: React.FC = () => {
-    const {notes} = useNotes();
+    const {notes, getNotesHandler} = useNotes();
+
+    if (shouldLoadList) {
+        getNotesHandler();
+        shouldLoadList = false;
+    }
 
     return (
+        notes.length ?
         <List className="notes-list">
             {notes.map((note, index) => {
                 return (
@@ -18,8 +27,8 @@ const Notes: React.FC = () => {
                     </React.Fragment>
                 )
             })}
-        </List>
-
+        </List> :
+        <NoResultsText>No notes, please add one</NoResultsText>
     );
 }
 

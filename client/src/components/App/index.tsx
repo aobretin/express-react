@@ -8,23 +8,15 @@ import Routes from "../Routes";
 import Header from "../Header";
 import useNotes from "../../reduxHooks/useNotes";
 
-import {NoResultsText} from "./styles";
-
 const App: React.FC = () => {
-  const {notes, addNotesHandler} = useNotes();
-
-  useEffect(() => {addNotesHandler()}, []);
+  const {getNotesHandler} = useNotes();
 
   return (
     <div className="Notes">
       <Router>
         <CssBaseline />
         <Header />
-        {
-          notes.length ?
-          <Routes /> :
-          <NoResultsText>No notes, please add one</NoResultsText>
-        }
+        <Routes />
       </Router>
     </div>
   );

@@ -4,3 +4,10 @@ export interface INote {
     description: string;
     tags: string[];
 }
+
+// export interface INoteBodyParams {
+//     id?: string;
+//     title?: string;
+//     description?: string;
+//     [key: string]: any;
+// }
