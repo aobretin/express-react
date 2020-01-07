@@ -107,10 +107,10 @@ const NoteDetails: React.FC = () => {
             description,
             tags
         }
-        
-        addNoteHandler(toSendNote).then(_ => {
-            history.push("/");
-        });
+
+        const actionToTake = noteDetailsProps.edit ? modifyNoteHandler : addNoteHandler;
+
+        actionToTake(toSendNote).then(_ => history.push("/"));
     }
 
     const renderCorrectSaveButton = (): JSX.Element | null => {
@@ -123,6 +123,7 @@ const NoteDetails: React.FC = () => {
                         variant="contained" 
                         color="primary" 
                         size="small"
+                        onClick={saveNote}
                     >
                         Modify note
                     </Button>;
