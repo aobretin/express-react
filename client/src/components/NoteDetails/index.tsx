@@ -25,7 +25,7 @@ interface INoteDetailsState extends Partial<INote> {
 const NoteDetails: React.FC = () => {
     const { id, edit } = useParams();
     const history = useHistory();
-    const {addNoteHandler, getNoteHandler} = useNotes();
+    const {addNoteHandler, getNoteHandler, modifyNoteHandler} = useNotes();
 
     const [noteDetailsProps, setNoteDetailsProps] = useState<INoteDetailsState>({
         title: "",
@@ -107,7 +107,7 @@ const NoteDetails: React.FC = () => {
             description,
             tags
         }
-
+        
         addNoteHandler(toSendNote).then(_ => {
             history.push("/");
         });
