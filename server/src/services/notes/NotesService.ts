@@ -8,9 +8,14 @@ export class NotesService {
     @Inject(NoteModel)
     private Note: MongooseModel<NoteModel>;
 
-    async getAllNotes(query: Partial<NoteModel> | null): Promise<NoteModel[] | NoteModel> {
-        $log.debug("Fetching one or all notes");
-        return this.Note.find(query).exec();
+    async getAllNotes(): Promise<NoteModel[]> {
+        $log.debug("Fetching all notes");
+        return this.Note.find({}).exec();
+    }
+
+    async getNote(id: string): Promise<NoteModel> {
+        $log.debug("Fetching note with id", id);
+        return this.Note.findById(id).exec();
     }
 
     async saveNote(note: NoteModel): Promise<NoteModel> {

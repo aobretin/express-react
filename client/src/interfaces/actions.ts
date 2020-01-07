@@ -1,4 +1,4 @@
-import {ADD_NOTE, ADD_NOTES, MODIFY_NOTE, DELETE_NOTE} from "../constants";
+import {ADD_NOTE, ADD_NOTES, MODIFY_NOTE, DELETE_NOTE, SET_SEARCH_TERM} from "../constants";
 import {INote} from "./notes";
 
 export interface IAddNotes {
@@ -19,4 +19,9 @@ export interface IModifyNote {
 export interface IDeleteNote {
     type: typeof DELETE_NOTE;
     id: string
+}
+
+export interface ISetSearchTerm {
+    type: typeof SET_SEARCH_TERM;
+    searchTerm: string
 }

@@ -5,9 +5,3 @@ export interface INote {
     tags: string[];
 }
 
-// export interface INoteBodyParams {
-//     id?: string;
-//     title?: string;
-//     description?: string;
-//     [key: string]: any;
-// }

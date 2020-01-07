@@ -1,11 +1,16 @@
 import React, {useState, ChangeEvent} from 'react';
 import {FilterBarStyles} from "./styles";
+import useSearchTerm from "../../../../reduxHooks/useSearchTerm"
 
 const FilterBar: React.FC = () => {
     const [filter, setFilter] = useState<string>('');
+    const {setSearchTermHandler} = useSearchTerm();
 
     const onFilterChange = (event: ChangeEvent<{ value: unknown }>): void => {
-        setFilter(event.target.value as string);
+        const searchTerm = event.target.value as string;
+
+        setFilter(searchTerm);
+        setSearchTermHandler(searchTerm);
     }
 
     return (

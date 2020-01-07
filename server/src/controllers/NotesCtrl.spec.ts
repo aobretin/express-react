@@ -10,8 +10,8 @@ describe("NotesCtrl", () => {
     beforeEach(() => TestContext.create());
     afterEach(() => TestContext.reset());
 
-    describe("getAllNotes()", () => {
-        it("should return one note if it has 'id' param", async () => {
+    describe("getNote()", () => {
+        it("should return one note", async () => {
             const note = new NoteModel();
             note._id = "id";
             note.title = "title";
@@ -19,7 +19,7 @@ describe("NotesCtrl", () => {
             note.tags = ["tag"];
         
             const notesService = {
-                getAllNotes: Sinon.stub().resolves(note)
+                getNote: Sinon.stub().resolves(note)
             };
         
             const notesCtrl: NotesCtrl = await TestContext.invoke(NotesCtrl, [{
@@ -27,13 +27,15 @@ describe("NotesCtrl", () => {
                 use: notesService
             }]);
         
-            const result = await notesCtrl.getAllNotes("id");
+            const result = await notesCtrl.getNote("id");
             
-            notesService.getAllNotes.should.be.calledWithExactly({_id: "id"});
+            notesService.getNote.should.be.calledWithExactly("id");
             result.should.deep.eq(note);
         });
+    });
 
-        it("should return all notes if 'id' param is not defined", async () => {
+    describe("getAllNotes()", () => {
+        it("should return all notes", async () => {
             const note = new NoteModel();
             note._id = "id";
             note.title = "title";
@@ -57,7 +59,7 @@ describe("NotesCtrl", () => {
                 use: notesService
             }]);
         
-            const results = await notesCtrl.getAllNotes("id");
+            const results = await notesCtrl.getAllNotes();
 
             expect(results).to.be.an("array");
         });

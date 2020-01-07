@@ -18,38 +18,41 @@ import {
 
 interface INoteDetailsState extends Partial<INote> {
     tag: string,
-    edit: boolean,
-    noteId: string | null
+    isPreview: boolean
 }
 
 const NoteDetails: React.FC = () => {
     const { id, edit } = useParams();
     const history = useHistory();
-    const {addNoteHandler, getNoteHandler, modifyNoteHandler} = useNotes();
+    const {
+        addNoteHandler, 
+        getNoteHandler, 
+        modifyNoteHandler,
+        deleteNoteHandler
+    } = useNotes();
 
     const [noteDetailsProps, setNoteDetailsProps] = useState<INoteDetailsState>({
         title: "",
         description: "",
         tag: "",
-        noteId: null,
-        edit: false,
-        tags: []
+        tags: [],
+        isPreview: !!id && !edit
     });
+    const idForDelete = id || ""; // to bypass typescript think id can be undefined
 
     useEffect(() => {
         if (id) {
             getNoteHandler(id).then(res => {
-                const note = res.data[0];
+                const {data: note} = res;
 
                 setNoteDetailsProps({
                     ...noteDetailsProps,
-                    noteId: note.id,
+                    id: note.id,
                     title: note.title,
                     description: note.description,
-                    tags: note.tags,
-                    edit: edit === "edit"
+                    tags: note.tags
                 });
-            });
+            }).catch(e => new Error(e));
         }
     }, [])
 
@@ -96,62 +99,38 @@ const NoteDetails: React.FC = () => {
 
     const saveNote = (): void => {
         const {
+            id = "",
             title = "",
             description = "",
             tags = []
         } = noteDetailsProps
 
         const toSendNote = {
-            id: "",
+            id,
             title,
             description,
             tags
         }
 
-        const actionToTake = noteDetailsProps.edit ? modifyNoteHandler : addNoteHandler;
+        const actionToTake = edit ? modifyNoteHandler : addNoteHandler;
 
         actionToTake(toSendNote).then(_ => history.push("/"));
     }
 
-    const renderCorrectSaveButton = (): JSX.Element | null => {
-        let button = null;
-        const isDisabled = !noteDetailsProps.title || !noteDetailsProps.description || !noteDetailsProps.tags || !noteDetailsProps.tags.length;
-
-        if (noteDetailsProps.noteId && noteDetailsProps.edit) {
-            button = <Button 
-                        disabled={isDisabled}
-                        variant="contained" 
-                        color="primary" 
-                        size="small"
-                        onClick={saveNote}
-                    >
-                        Modify note
-                    </Button>;
-            
-        } else {
-            button = <Button 
-                        disabled={isDisabled}
-                        variant="contained" 
-                        color="primary" 
-                        size="small"
-                        onClick={saveNote}
-                    >
-                        Save note
-                    </Button>;
-        }
-
-        return button;
-    };
+    const deleteNote = (id: string): void => {
+        deleteNoteHandler(id).then(_ => history.push("/"));
+    }
 
     return (
         <NoteDetailsHolderStyles>
             <CardStyles variant="outlined">
                 <CardContent>
                 <Typography variant="h5" component="h2">
-                    Card Details
+                    Note Details
                 </Typography>
                     <InputStyles
                         name="title"
+                        disabled={noteDetailsProps.isPreview}
                         value={noteDetailsProps.title}
                         onChange={onInputChange}
                         placeholder="Note title..."
@@ -159,6 +138,7 @@ const NoteDetails: React.FC = () => {
 
                     <InputStyles
                         name="description"
+                        disabled={noteDetailsProps.isPreview}
                         value={noteDetailsProps.description}
                         onChange={onInputChange}
                         placeholder="Note description..."
@@ -166,13 +146,16 @@ const NoteDetails: React.FC = () => {
 
                     <InputStyles
                         name="tag"
+                        disabled={noteDetailsProps.isPreview}
                         value={noteDetailsProps.tag}
                         onChange={onInputChange}
                         onKeyPress={addTag}
                         placeholder="Note tag..."
                     />
+
                     {noteDetailsProps.tags && noteDetailsProps.tags.map((tag, i) => (
                         <ChipNoteStyles 
+                            disabled={noteDetailsProps.isPreview}
                             onDelete={() => removeTag(tag)} 
                             variant="outlined" 
                             key={i} 
@@ -188,7 +171,41 @@ const NoteDetails: React.FC = () => {
                         </Button>
                     </Link>
 
-                    {renderCorrectSaveButton()}
+                    {(!id || edit) && <Button 
+                        disabled={
+                            !noteDetailsProps.title || 
+                            !noteDetailsProps.description || 
+                            !noteDetailsProps.tags || 
+                            !noteDetailsProps.tags.length
+                        }
+                        variant="contained" 
+                        color="primary" 
+                        size="small"
+                        onClick={saveNote}
+                    >
+                        Save
+                    </Button>}
+
+                    {noteDetailsProps.isPreview && <React.Fragment>
+                        <Link to={`/note/${id}/edit`}>
+                            <Button 
+                                variant="contained" 
+                                color="primary" 
+                                size="small"
+                            >
+                                Edit
+                            </Button>
+                        </Link> 
+
+                        <Button 
+                            variant="contained" 
+                            color="secondary" 
+                            size="small"
+                            onClick={() => deleteNote(idForDelete)}
+                        >
+                            Delete
+                        </Button>
+                    </React.Fragment>}
                 </CardActions>
             </CardStyles>
         </NoteDetailsHolderStyles>

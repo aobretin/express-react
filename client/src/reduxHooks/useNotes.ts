@@ -12,9 +12,9 @@ interface IUseNotes {
     notes: INote[];
     getNoteHandler: (id: string) => Promise<AxiosResponse>;
     getNotesHandler: () => void;
-    addNoteHandler: (note: INote) => Promise<AxiosResponse>;
-    modifyNoteHandler: (note: Partial<INote>) => Promise<AxiosResponse>;
-    deleteNoteHandler: (id: string) => void;
+    addNoteHandler: (note: INote) => Promise<AxiosResponse | Error>;
+    modifyNoteHandler: (note: INote) => Promise<AxiosResponse | Error>;
+    deleteNoteHandler: (id: string) => Promise<AxiosResponse | Error>;
 }
 
 const useNotes = (): IUseNotes => {
@@ -29,29 +29,29 @@ const useNotes = (): IUseNotes => {
         axios.get(ENDPOINTS.GET_NOTES).then(res => {
             const {data: notes} = res;
             dispatch(addNotes(notes));
-        });
+        }).catch(e => new Error(e));
     };
 
-    const addNoteHandler = (note: INote): Promise<AxiosResponse> => {
+    const addNoteHandler = (note: INote): Promise<AxiosResponse | Error> => {
         return axios.post(ENDPOINTS.CREATE_NOTE, formatNoteForRequest(note)).then(res => {
             const {data: newNote} = res;
             dispatch(addNote(newNote));
             return res;
-        });
+        }).catch(e => new Error(e));
     };
 
-    const modifyNoteHandler = (note: Partial<INote>): Promise<AxiosResponse> => {
-        return axios.post(ENDPOINTS.CREATE_NOTE, note).then(res => {
-            const {data: modifiedNote} = res;
-            dispatch(modifyNote(modifiedNote));
+    const modifyNoteHandler = (note: INote): Promise<AxiosResponse | Error> => {
+        return axios.put(ENDPOINTS.MODIFY_NOTE.replace(":id", note.id), note).then(res => {
+            dispatch(modifyNote(note));
             return res;
-        });
+        }).catch(e => new Error(e));
     };
 
-    const deleteNoteHandler = (id: string): void => {
-        axios.delete(ENDPOINTS.DELETE_NOTE.replace(":id", id)).then(_ => {
+    const deleteNoteHandler = (id: string): Promise<AxiosResponse | Error> => {
+        return axios.delete(ENDPOINTS.DELETE_NOTE.replace(":id", id)).then(_ => {
             dispatch(deleteNote(id));
-        });
+            return _;
+        }).catch(e => new Error(e));
     };
 
     return {

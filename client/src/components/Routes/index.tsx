@@ -15,9 +15,15 @@ export default (): JSX.Element => {
                     <Notes />
                 </Route>
 
-                <Route path="/note/:id?/:edit?">
-                    <NoteDetails />
-                </Route>
+                <Route path="/note/:id?/:edit?" render={props => {
+                    const {
+                        match: {
+                            params: { id, edit }
+                        }
+                    } = props;
+
+                    return <NoteDetails key={`${id}+${edit}`} />
+                }} />
             </Route>
         </Switch>
     )

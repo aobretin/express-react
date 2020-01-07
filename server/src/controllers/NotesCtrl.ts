@@ -19,11 +19,15 @@ export class NotesCtrl {
     }
 
     @Get()
-    @Get("/:id")
     @Status(200, {description: "Success", type: Note, collectionType: Array})
-    async getAllNotes(@PathParams("id") id?: string): Promise<Note[] | Note> {
-        const query = id ? {_id: id} : null;
-        return this.notesService.getAllNotes(query);
+    async getAllNotes(): Promise<Note[]> {
+        return this.notesService.getAllNotes();
+    }
+
+    @Get("/:id")
+    @Status(200, {description: "Success", type: Note})
+    async getNote(@PathParams("id") id?: string): Promise<Note> {
+        return this.notesService.getNote(id);
     }
 
     @Post()
