@@ -59,4 +59,8 @@ To submit your work on this project, please email a .zip archive of your project
 
 ## Running
 
-Please replace this section with instructions for running the application. 
+Install instructions:
+
+* git clone
+* yarn install and yarn start in both /server and /client
+* happy code review :D
