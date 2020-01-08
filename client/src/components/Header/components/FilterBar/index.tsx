@@ -15,6 +15,7 @@ const FilterBar: React.FC = () => {
 
     return (
         <FilterBarStyles
+            data-testid="filter-bar"
             value={filter}
             onChange={onFilterChange}
             placeholder="Filter notes by tag..."
