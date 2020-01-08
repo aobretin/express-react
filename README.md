@@ -63,5 +63,6 @@ Install instructions:
 
 * git clone
 * yarn install and yarn start in both /server and /client
-* to test run yarn run cypress:open / cypress:run
+* to test run yarn run cypress:open / cypress:run (client)
+* yarn run test:unit (server)
 * happy code review :D
