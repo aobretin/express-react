@@ -18,7 +18,7 @@ const Note: React.FC<INote> = ({
     id
 }) => {
     return (
-        <ListItem alignItems="flex-start">
+        <ListItem data-testid="note" data-test_id={id} alignItems="flex-start">
             <NoteListDetailsHolderStyles>
                 <NoteListDetailsHolderSegmentStyles>
                     <ListItemText primary={title} />

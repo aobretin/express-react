@@ -16,6 +16,8 @@ export default (): JSX.Element => {
                 </Route>
 
                 <Route path="/note/:id?/:edit?" render={props => {
+                    // this is for reloading the component when only query params
+                    // change but location stays the same, for preview -> edit
                     const {
                         match: {
                             params: { id, edit }

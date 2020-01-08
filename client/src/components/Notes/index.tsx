@@ -1,6 +1,7 @@
 import React from 'react';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 import Note from "./components/Note";
 import {NoResultsText} from "./styles";
@@ -18,13 +19,18 @@ const Notes: React.FC = () => {
     });
 
     if (shouldLoadList) {
-        getNotesHandler();
-        shouldLoadList = false;
+        getNotesHandler().then(_ => {
+            shouldLoadList = false;
+        });
     }
 
     return (
-        notes.length ?
-        <List className="notes-list">
+        shouldLoadList ? <React.Fragment>
+            <Skeleton animation="wave" />
+            <Skeleton animation="wave" />
+            <Skeleton animation="wave" />
+        </React.Fragment> : notes.length ?
+        <List data-testid="notes-list" className="notes-list">
             {filteredNotes.length ? filteredNotes.map((note, index) => {
                 return (
                     <React.Fragment key={note.id}>
@@ -34,7 +40,7 @@ const Notes: React.FC = () => {
                 )
             }) : <NoResultsText>No notes, please refine your search</NoResultsText>}
         </List> :
-        <NoResultsText>No notes, please add one</NoResultsText>
+        <NoResultsText data-testid="no-results">No notes, please add one</NoResultsText>
     );
 }
 

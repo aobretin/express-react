@@ -17,19 +17,19 @@ const Buttons: React.FC<ButtonsProps> = ({id}) => {
 
     return (
         <React.Fragment>
-            <Link to={`/note/${id}`}>
+            <Link data-testid="preview-note" to={`/note/${id}`}>
                 <IconButton>
                     <RemoveRedEyeIcon color="primary" fontSize="small" />
                 </IconButton>
             </Link>
 
-            <Link to={`/note/${id}/edit`}>
+            <Link data-testid="edit-note" to={`/note/${id}/edit`}>
                 <IconButton>
                     <EditIcon fontSize="small" />
                 </IconButton>
             </Link>
 
-            <IconButton onClick={() => deleteNoteHandler(id)}>
+            <IconButton data-testid="delete-note" onClick={() => deleteNoteHandler(id)}>
                 <DeleteIcon color="secondary" fontSize="small" />
             </IconButton>
         </React.Fragment>

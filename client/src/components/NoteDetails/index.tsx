@@ -130,6 +130,7 @@ const NoteDetails: React.FC = () => {
                 </Typography>
                     <InputStyles
                         name="title"
+                        data-testid="title"
                         disabled={noteDetailsProps.isPreview}
                         value={noteDetailsProps.title}
                         onChange={onInputChange}
@@ -138,6 +139,7 @@ const NoteDetails: React.FC = () => {
 
                     <InputStyles
                         name="description"
+                        data-testid="description"
                         disabled={noteDetailsProps.isPreview}
                         value={noteDetailsProps.description}
                         onChange={onInputChange}
@@ -146,6 +148,7 @@ const NoteDetails: React.FC = () => {
 
                     <InputStyles
                         name="tag"
+                        data-testid="tag"
                         disabled={noteDetailsProps.isPreview}
                         value={noteDetailsProps.tag}
                         onChange={onInputChange}
@@ -155,6 +158,7 @@ const NoteDetails: React.FC = () => {
 
                     {noteDetailsProps.tags && noteDetailsProps.tags.map((tag, i) => (
                         <ChipNoteStyles 
+                            data-testid="note-tag-chip"
                             disabled={noteDetailsProps.isPreview}
                             onDelete={() => removeTag(tag)} 
                             variant="outlined" 
@@ -178,6 +182,7 @@ const NoteDetails: React.FC = () => {
                             !noteDetailsProps.tags || 
                             !noteDetailsProps.tags.length
                         }
+                        data-testid="save-note"
                         variant="contained" 
                         color="primary" 
                         size="small"

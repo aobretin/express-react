@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Buttons: React.FC = () => {
     return (
         <React.Fragment>
-            <Link to="/note">
+            <Link data-testid="add-note" to="/note">
                 <Fab size="small">
                     <AddIcon />
                 </Fab>
