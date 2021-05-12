@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@tsed/common": "5.36.2",
-    "@tsed/core": "5.36.2",
+    "@tsed/core": "5.65.7",
     "@tsed/di": "5.36.2",
     "@tsed/mongoose": "5.36.2",
     "@tsed/testing": "5.32.2",
